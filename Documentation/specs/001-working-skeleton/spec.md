@@ -61,9 +61,8 @@ The Working Skeleton produces the following outputs:
 * The total price calculated using mock product prices.
 * A downloadable JSON order draft containing the required order information.
 
-The exact structure of the JSON order draft must be consistent with the existing domain model.
-
-<!-- TODO: Once the relevant domain-model fields are finalized, align this section with contracts/order-draft.md. -->
+The exact structure of the JSON order draft must be consistent with the existing domain model. The
+finalized structure is defined in [`contracts/order-draft.md`](./contracts/order-draft.md).
 
 ---
 
@@ -83,7 +82,12 @@ The Working Skeleton must apply the following business rules:
 * An order draft is generated only after the user confirms the selected recipe.
 * If no recipe proposal satisfies the 70% budget constraint, the system must inform the user that no suitable recipe can be proposed for the given input.
 
-<!-- TODO: Define exact user-facing validation/error messages only if exact wording is a requirement. -->
+Exact user-facing message wording is not a requirement of this specification; the implementation
+uses the following German-language copy, editable without a spec change:
+
+* Invalid budget: "Bitte geben Sie ein Budget grösser als CHF 0.00 ein."
+* Invalid guest count: "Bitte geben Sie eine positive Anzahl Gäste ein."
+* No suitable recipe: "Für diese Eingaben konnte kein passendes Menü gefunden werden."
 
 ---
 
@@ -179,7 +183,9 @@ The Working Skeleton must apply the following business rules:
 * The JSON contains the required number of packs for each product.
 * Price information is not included in the downloaded order draft.
 
-<!-- TODO: Replace "product information required by the domain model" with exact fields once contracts/order-draft.md is finalized. -->
+The exact field set is defined in [`contracts/order-draft.md`](./contracts/order-draft.md): article
+number, product name, package quantity, measurement unit, sales-package type, and ordered package
+count per line.
 
 ### Scenario 6: Reject invalid budget
 

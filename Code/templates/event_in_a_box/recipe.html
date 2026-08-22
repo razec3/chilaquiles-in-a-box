@@ -1,0 +1,45 @@
+{% extends "event_in_a_box/base.html" %}
+{% load event_in_a_box_extras %}
+
+{% block title %}{{ recipe.name }}{% endblock %}
+{% block breadcrumb_page %}Rezeptdetail{% endblock %}
+
+{% block content %}
+  <div class="card">
+    <p class="card-title">{{ recipe.name }}</p>
+    <p class="card-description">{{ recipe.description }}</p>
+    <div class="card-stats">
+      <div class="card-stat">
+        <span class="label">Gesamtkosten</span>
+        <span class="value">CHF {{ package.total_purchase_cost|floatformat:2 }}</span>
+      </div>
+      <div class="card-stat align-end">
+        <span class="label">Pro Gast</span>
+        <span class="value">CHF {{ package.purchase_cost_per_guest|floatformat:2 }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="card-title">Zutaten für {{ guest_count }} Gäste</p>
+    <table class="order-lines">
+      <tbody>
+        {% for requirement in package.product_requirements %}
+          <tr>
+            <td>{{ requirement.product.name }}</td>
+            <td class="align-end">
+              {{ requirement.required_quantity|floatformat:-2 }} {{ requirement.product.measured_in|unit_label }}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <form method="post" action="{% url 'event_in_a_box:confirm_recipe' recipe_id=recipe.id %}">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary">Zum Event hinzufügen</button>
+  </form>
+
+  <a class="btn btn-secondary" href="{% url 'event_in_a_box:suggestions' %}">Zurück</a>
+{% endblock %}

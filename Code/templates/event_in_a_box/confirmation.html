@@ -1,0 +1,49 @@
+{% extends "event_in_a_box/base.html" %}
+
+{% block title %}Bestätigung{% endblock %}
+{% block breadcrumb_page %}Bestätigung{% endblock %}
+
+{% block content %}
+  <div class="card text-center">
+    <div class="confirmation-icon">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+        <path d="M8 12.5l2.5 2.5L16 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <p class="card-title">Bestellung bestätigt!</p>
+    <p class="card-description">Ihre Eventbestellung wurde erfolgreich aufgegeben.</p>
+
+    <hr class="divider">
+
+    <table class="summary-table">
+      <tbody>
+        <tr>
+          <td class="label">Menü</td>
+          <td class="value">{{ recipe.name }}</td>
+        </tr>
+        <tr>
+          <td class="label">Gäste</td>
+          <td class="value">{{ guest_count }}</td>
+        </tr>
+        <tr>
+          <td class="label">Gesamtkosten</td>
+          <td class="value">CHF {{ package.total_purchase_cost|floatformat:2 }}</td>
+        </tr>
+        <tr>
+          <td class="label">Budget</td>
+          <td class="value">CHF {{ budget|floatformat:2 }}</td>
+        </tr>
+        <tr>
+          <td class="label">Verbleibend</td>
+          <td class="value">CHF {{ remaining|floatformat:2 }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="button-stack">
+    <a class="btn btn-secondary" href="{% url 'event_in_a_box:download_order' %}">Bestellung herunterladen</a>
+    <a class="btn btn-link" href="{% url 'event_in_a_box:restart' %}">← Zurück zur Startseite</a>
+  </div>
+{% endblock %}

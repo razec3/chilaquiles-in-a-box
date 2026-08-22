@@ -1,0 +1,43 @@
+{% extends "event_in_a_box/base.html" %}
+
+{% block title %}Menüvorschläge{% endblock %}
+{% block breadcrumb_page %}Menüvorschläge{% endblock %}
+
+{% block content %}
+  <h1 class="page-title">Menüvorschläge für {{ guest_count }} Gäste</h1>
+  <p class="page-subtitle">
+    Budget: CHF {{ budget|floatformat:2 }} · Kostenlimit: CHF {{ purchase_limit|floatformat:2 }}
+  </p>
+
+  {% if suggestions %}
+    {% for package in suggestions %}
+      {% with recipe=package.recipes.0 %}
+        <div class="card">
+          <p class="card-title">{{ recipe.name }}</p>
+          <p class="card-description">{{ recipe.description }}</p>
+          <div class="card-stats">
+            <div class="card-stat">
+              <span class="label">Gesamtkosten</span>
+              <span class="value">CHF {{ package.total_purchase_cost|floatformat:2 }}</span>
+            </div>
+            <div class="card-stat align-end">
+              <span class="label">Pro Gast</span>
+              <span class="value">CHF {{ package.purchase_cost_per_guest|floatformat:2 }}</span>
+            </div>
+          </div>
+          <form method="post" action="{% url 'event_in_a_box:select_recipe' recipe_id=recipe.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-secondary">Auswählen</button>
+          </form>
+        </div>
+      {% endwith %}
+    {% endfor %}
+  {% else %}
+    <div class="info-box empty-state">
+      Für diese Eingaben konnte kein passendes Menü gefunden werden. Bitte passen Sie Budget oder
+      Gästeanzahl an.
+    </div>
+  {% endif %}
+
+  <a class="btn btn-secondary" href="{% url 'event_in_a_box:event_input' %}">Zurück</a>
+{% endblock %}

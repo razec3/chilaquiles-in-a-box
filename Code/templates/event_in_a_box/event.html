@@ -1,0 +1,62 @@
+{% extends "event_in_a_box/base.html" %}
+{% load static %}
+
+{% block title %}Event planen{% endblock %}
+{% block breadcrumb_page %}Event planen{% endblock %}
+
+{% block content %}
+  <h1 class="page-title">Event planen</h1>
+  <p class="page-subtitle">Planen Sie Ihr Event und erhalten Sie passende Menüvorschläge.</p>
+
+  {# novalidate: min/step below are UX hints only; Django's server-side validation is authoritative. #}
+  <form method="post" novalidate>
+    {% csrf_token %}
+    <div class="card">
+      <div class="field">
+        <label for="id_guest_count">Anzahl Gäste</label>
+        <input
+          type="number"
+          name="guest_count"
+          id="id_guest_count"
+          min="1"
+          step="1"
+          inputmode="numeric"
+          placeholder="z. B. 50"
+          value="{{ form.guest_count.value|default_if_none:'' }}"
+        >
+        {% for error in form.guest_count.errors %}
+          <span class="field-error">{{ error }}</span>
+        {% endfor %}
+      </div>
+      <div class="field">
+        <label for="id_budget">Budget (CHF)</label>
+        <input
+          type="number"
+          name="budget"
+          id="id_budget"
+          min="0.01"
+          step="0.01"
+          inputmode="decimal"
+          placeholder="z. B. 2000.00"
+          value="{{ form.budget.value|default_if_none:'' }}"
+        >
+        {% for error in form.budget.errors %}
+          <span class="field-error">{{ error }}</span>
+        {% endfor %}
+      </div>
+
+      <hr class="divider">
+
+      <div class="info-box">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 8v.01M12 11v5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <span id="purchase-limit-hint">Einkaufskosten max. 70% des Budgets</span>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Vorschläge anzeigen</button>
+  </form>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{% static 'js/event-form.js' %}"></script>
+{% endblock %}

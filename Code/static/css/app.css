@@ -1,0 +1,430 @@
+/*
+  House style for the Working Skeleton, derived from Transgourmet-branded
+  reference screenshots (see Documentation/Design/figma.md). No approved
+  Figma file is linked yet; treat colors/spacing here as provisional until
+  one is.
+*/
+
+:root {
+  --tg-red: #e2001a;
+  --tg-red-dark: #b30014;
+  --tg-ink: #1a1a1a;
+  --tg-grey-text: #6b7280;
+  --tg-grey-bg: #f2f3f5;
+  --tg-grey-border: #e2e4e8;
+  --tg-card-bg: #ffffff;
+  --tg-success: #2e7d32;
+  --tg-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--tg-grey-bg);
+  color: var(--tg-ink);
+  font-family:
+    "Segoe UI",
+    system-ui,
+    -apple-system,
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.app-shell {
+  max-width: 430px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: var(--tg-grey-bg);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+
+.app-header {
+  background: #ffffff;
+  border-bottom: 1px solid var(--tg-grey-border);
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.app-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--tg-red);
+  letter-spacing: 0.02em;
+  text-decoration: none;
+}
+
+.app-logo .ribbon {
+  width: 22px;
+  height: 22px;
+  flex: none;
+}
+
+.app-header-icons {
+  display: flex;
+  gap: 16px;
+  color: var(--tg-ink);
+}
+
+.app-header-icons svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Breadcrumb */
+
+.breadcrumb {
+  background: var(--tg-grey-bg);
+  padding: 10px 20px;
+  font-size: 12px;
+  color: var(--tg-grey-text);
+  border-bottom: 1px solid var(--tg-grey-border);
+}
+
+.breadcrumb .current-section {
+  color: var(--tg-red);
+  font-weight: 700;
+}
+
+.breadcrumb .current-page {
+  color: var(--tg-grey-text);
+}
+
+/* Content */
+
+.app-content {
+  padding: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.page-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.page-subtitle {
+  font-size: 14px;
+  color: var(--tg-grey-text);
+  margin: -8px 0 0;
+}
+
+/* Cards */
+
+.card {
+  background: var(--tg-card-bg);
+  border-radius: 12px;
+  box-shadow: var(--tg-shadow);
+  padding: 20px;
+}
+
+.card + .card,
+.card + .btn,
+form > .btn {
+  margin-top: 16px;
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 0 4px;
+}
+
+.card-description {
+  font-size: 13px;
+  color: var(--tg-grey-text);
+  margin: 0 0 14px;
+}
+
+.card-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.card-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-stat .label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--tg-grey-text);
+}
+
+.card-stat .value {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.card-stat.align-end {
+  align-items: flex-end;
+}
+
+hr.divider {
+  border: none;
+  border-top: 1px solid var(--tg-grey-border);
+  margin: 14px 0;
+}
+
+/* Forms */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.field:last-child {
+  margin-bottom: 0;
+}
+
+.field label {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.field input {
+  border: 1px solid var(--tg-grey-border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 16px;
+  font-family: inherit;
+}
+
+.field input:focus {
+  outline: 2px solid var(--tg-red);
+  outline-offset: -1px;
+}
+
+.field-error {
+  color: var(--tg-red-dark);
+  font-size: 13px;
+}
+
+/* Info box */
+
+.info-box {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  background: var(--tg-grey-bg);
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 13px;
+  color: var(--tg-grey-text);
+}
+
+.info-box svg {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  color: var(--tg-red);
+  margin-top: 1px;
+}
+
+.info-box.empty-state {
+  background: #ffffff;
+  box-shadow: var(--tg-shadow);
+  padding: 20px;
+  font-size: 14px;
+  color: var(--tg-ink);
+}
+
+/* Buttons */
+
+.btn {
+  display: block;
+  width: 100%;
+  text-align: center;
+  border-radius: 8px;
+  padding: 14px 16px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  border: 1px solid transparent;
+}
+
+.btn-primary {
+  background: var(--tg-red);
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background: var(--tg-red-dark);
+}
+
+.btn-secondary {
+  background: #ffffff;
+  color: var(--tg-red);
+  border-color: var(--tg-red);
+}
+
+.btn-outline {
+  background: #ffffff;
+  color: var(--tg-red);
+  border-color: var(--tg-red);
+  padding: 10px 14px;
+  font-size: 14px;
+}
+
+.btn-link {
+  background: transparent;
+  color: var(--tg-red);
+  font-weight: 600;
+  padding: 8px;
+}
+
+form.inline {
+  margin: 0;
+}
+
+/* Progress bar */
+
+.progress-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--tg-grey-text);
+  margin-bottom: 6px;
+}
+
+.progress-row .percent {
+  color: var(--tg-success);
+  font-weight: 700;
+}
+
+.progress-track {
+  background: var(--tg-grey-border);
+  border-radius: 999px;
+  height: 8px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  background: var(--tg-success);
+  height: 100%;
+  border-radius: 999px;
+}
+
+/* Order lines table */
+
+.order-lines {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.order-lines th {
+  text-align: left;
+  color: var(--tg-grey-text);
+  font-weight: 600;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--tg-grey-border);
+}
+
+.order-lines th.align-end,
+.order-lines td.align-end {
+  text-align: right;
+}
+
+.order-lines td {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--tg-grey-border);
+}
+
+.order-lines .product-quantity {
+  display: block;
+  color: var(--tg-grey-text);
+  font-size: 12px;
+}
+
+.order-summary {
+  margin-top: 16px;
+  font-size: 14px;
+}
+
+.order-summary-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+}
+
+.order-summary-row.total {
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--tg-red);
+}
+
+.order-summary-row .positive {
+  color: var(--tg-success);
+  font-weight: 700;
+}
+
+/* Confirmation */
+
+.confirmation-icon {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.confirmation-icon svg {
+  width: 56px;
+  height: 56px;
+  color: var(--tg-success);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.summary-table {
+  width: 100%;
+  font-size: 14px;
+  border-collapse: collapse;
+}
+
+.summary-table td {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--tg-grey-border);
+}
+
+.summary-table td.label {
+  color: var(--tg-grey-text);
+}
+
+.summary-table td.value {
+  text-align: right;
+  font-weight: 700;
+}
+
+.button-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
