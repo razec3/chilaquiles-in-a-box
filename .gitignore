@@ -1,1 +1,24 @@
 .vscode/
+
+# Environment
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+Code/.venv/
+*.egg-info/
+
+# Django
+Code/staticfiles/
+db.sqlite3
+
+# Tooling caches
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# OS
+.DS_Store
