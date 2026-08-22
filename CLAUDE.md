@@ -119,6 +119,9 @@ Use this repository structure:
 │   ├── event_in_a_box/
 │   ├── templates/
 │   ├── static/
+│   ├── infrastructure/
+│   │   ├── nginx/
+│   │   └── scripts/
 │   └── tests/
 │       ├── unit/
 │       ├── integration/
@@ -126,9 +129,6 @@ Use this repository structure:
 │       │   ├── features/
 │       │   └── step_definitions/
 │       └── fixtures/
-├── Infrastructure/
-│   ├── nginx/
-│   └── scripts/
 ├── Documentation/
 │   ├── Architecture/
 │   │   ├── ood.md
@@ -139,19 +139,19 @@ Use this repository structure:
 │   │   └── assets/
 │   ├── Domain/
 │   │   └── glossary.md
-│   └── Testing/
-│       ├── strategy.md
-│       └── traceability.md
-├── specs/
-│   └── NNN-feature-name/
-│       ├── spec.md
-│       ├── plan.md
-│       ├── tasks.md
-│       ├── data-model.md
-│       ├── research.md
-│       ├── quickstart.md
-│       ├── contracts/
-│       └── checklists/
+│   ├── Testing/
+│   │   ├── strategy.md
+│   │   └── traceability.md
+│   └── specs/
+│       └── NNN-feature-name/
+│           ├── spec.md
+│           ├── plan.md
+│           ├── tasks.md
+│           ├── data-model.md
+│           ├── research.md
+│           ├── quickstart.md
+│           ├── contracts/
+│           └── checklists/
 ├── .specify/
 │   ├── memory/
 │   │   └── constitution.md
@@ -163,6 +163,8 @@ Use this repository structure:
 └── Presentation/
 ```
 
+The four top-level project folders are `Documentation/`, `Misc/`, `Presentation/`, and `Code/`. Deployment assets (Nginx configuration, operational scripts) live under `Code/infrastructure/` since they are part of the deployable application, not a separate top-level concern. `.git/`, `.github/`, and `.specify/` are dot-prefixed tooling directories required by Git, GitHub Actions, and Spec Kit respectively; they are not part of the four project folders and must not be moved into them.
+
 Do not create empty feature artefacts merely to fill this tree. Spec Kit creates the relevant files for each feature when needed.
 
 ## Artefact ownership and source of truth
@@ -172,7 +174,7 @@ Do not create empty feature artefacts merely to fill this tree. Spec Kit creates
 Store feature-specific SDD artefacts in:
 
 ```text
-specs/NNN-feature-name/
+Documentation/specs/NNN-feature-name/
 ```
 
 `spec.md` defines what users need and why. It must contain user stories, functional requirements, explicit out-of-scope statements, measurable acceptance criteria, and relevant edge cases. It must not contain implementation details.
@@ -202,7 +204,7 @@ Documentation/Architecture/ood.md
 Documentation/Architecture/erm.md
 ```
 
-Feature-specific model changes are first described in the relevant `specs/NNN-feature-name/data-model.md`. After approval, the project-wide OOD and ERM must be updated in the same change so that they remain consistent.
+Feature-specific model changes are first described in the relevant `Documentation/specs/NNN-feature-name/data-model.md`. After approval, the project-wide OOD and ERM must be updated in the same change so that they remain consistent.
 
 OOD classes are not automatically database entities. The ERM contains only persisted data.
 
