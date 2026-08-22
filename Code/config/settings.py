@@ -26,8 +26,14 @@ def _env_list(name: str, default: str) -> list[str]:
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "django-insecure-local-development-only-change-me")
 DEBUG = _env_bool("DJANGO_DEBUG", False)
 ALLOWED_HOSTS = _env_list("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1")
+# Origins the CSRF check trusts for unsafe (POST/PUT/...) requests. Needed
+# because the app is only ever reached through the nginx reverse proxy on a
+# non-default port; the browser's Origin header (e.g. http://localhost:8080)
+# must be listed explicitly (Django 4+ CSRF Origin check requires this).
+CSRF_TRUSTED_ORIGINS = _env_list("DJANGO_CSRF_TRUSTED_ORIGINS", "http://localhost:8080")
 
 INSTALLED_APPS = [
+    "django.contrib.admin",
     "django.contrib.contenttypes",
     "django.contrib.auth",
     "django.contrib.sessions",

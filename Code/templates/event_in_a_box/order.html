@@ -1,0 +1,67 @@
+{% extends "event_in_a_box/base.html" %}
+{% load event_in_a_box_extras %}
+
+{% block title %}Bestellübersicht{% endblock %}
+{% block breadcrumb_page %}Bestellübersicht{% endblock %}
+
+{% block content %}
+  <h1 class="page-title">Bestellübersicht</h1>
+
+  <div class="card">
+    <table class="order-lines">
+      <thead>
+        <tr>
+          <th>Zutat &amp; Menge</th>
+          <th class="align-end">Kosten</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for requirement in package.product_requirements %}
+          <tr>
+            <td>
+              {{ requirement.product.name }}
+              <span class="product-quantity">
+                {{ requirement.required_quantity|floatformat:-2 }} {{ requirement.product.measured_in|unit_label }}
+              </span>
+            </td>
+            <td class="align-end">CHF {{ requirement.line_cost|floatformat:2 }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="order-summary">
+      <div class="order-summary-row">
+        <span>Eventbudget</span>
+        <span>CHF {{ budget|floatformat:2 }}</span>
+      </div>
+      <div class="order-summary-row">
+        <span>Kostenlimit (70%)</span>
+        <span>CHF {{ purchase_limit|floatformat:2 }}</span>
+      </div>
+      <div class="order-summary-row total">
+        <span>Gesamtkosten</span>
+        <span>CHF {{ package.total_purchase_cost|floatformat:2 }}</span>
+      </div>
+      <div class="order-summary-row">
+        <span>Verbleibend</span>
+        <span class="positive">CHF {{ remaining|floatformat:2 }} ✓</span>
+      </div>
+    </div>
+
+    <div class="progress-row" style="margin-top: 14px;">
+      <span>Budgetauslastung</span>
+      <span class="percent">{{ utilisation_percent }}%</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" style="width: {{ utilisation_percent }}%;"></div>
+    </div>
+  </div>
+
+  <form method="post" action="{% url 'event_in_a_box:confirm_order' %}">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary">Bestellung bestätigen</button>
+  </form>
+
+  <a class="btn btn-secondary" href="{% url 'event_in_a_box:recipe_detail' recipe_id=recipe.id %}">Zurück</a>
+{% endblock %}

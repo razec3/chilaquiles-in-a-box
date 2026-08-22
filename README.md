@@ -43,14 +43,31 @@ container start):
 docker compose run --rm web python manage.py migrate
 ```
 
+Static files (including the Django admin's own CSS/JS) are collected into
+the image at build time, but the `web`/`nginx` containers share them through
+a named volume that is only auto-populated from the image the *first* time
+it's created. After a rebuild that changes static assets, refresh the shared
+volume explicitly:
+
+```bash
+docker compose run --rm web python manage.py collectstatic --noinput
+```
+
+Create an admin account (see "Django admin" below):
+
+```bash
+docker compose run --rm web python manage.py createsuperuser
+```
+
 Start the stack:
 
 ```bash
 docker compose up
 ```
 
-Open the application at [http://localhost:8080](http://localhost:8080) and
-the health endpoint at [http://localhost:8080/health/](http://localhost:8080/health/).
+Open the application at [http://localhost:8080](http://localhost:8080), the
+health endpoint at [http://localhost:8080/health/](http://localhost:8080/health/),
+and the admin panel at [http://localhost:8080/admin/](http://localhost:8080/admin/).
 
 Stop the stack:
 
@@ -63,6 +80,22 @@ when explicitly desired:
 
 ```bash
 docker compose down -v
+```
+
+## Django admin
+
+The admin panel manages master data directly in PostgreSQL: Products,
+Recipes (with their ingredients, added inline), Event types, and
+Preferences. It is standalone infrastructure for now — the Working
+Skeleton feature (`specs/001-working-skeleton`) still reads its own mock
+data from `Code/event_in_a_box/mock_data.py`, not this database, so
+entries added here don't yet affect that flow.
+
+Create an account, then log in at
+[http://localhost:8080/admin/](http://localhost:8080/admin/):
+
+```bash
+docker compose run --rm web python manage.py createsuperuser
 ```
 
 ## Running tests
