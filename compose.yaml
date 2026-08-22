@@ -46,7 +46,7 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - ./Infrastructure/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./Code/infrastructure/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
       - static_files:/app/staticfiles:ro
     depends_on:
       web:

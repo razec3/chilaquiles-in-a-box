@@ -4,7 +4,7 @@ Event in a Box helps restaurateurs plan an economically sensible Apero for an
 event in a few minutes. This repository currently contains the **technical
 foundation only** — Django, PostgreSQL, Gunicorn, Nginx, Docker Compose, and
 the test and CI setup. Business features are added only after their feature
-specifications under `specs/` are approved. See [CLAUDE.md](CLAUDE.md) for
+specifications under `Documentation/specs/` are approved. See [CLAUDE.md](CLAUDE.md) for
 the full project scope and engineering rules.
 
 ## Prerequisites
