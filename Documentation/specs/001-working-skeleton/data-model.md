@@ -9,7 +9,6 @@ The project already has an existing class model. This file documents only the su
 
 The Working Skeleton specification currently refers to these concepts:
 
-- Dish
 - Recipe
 - Ingredient
 - Product
