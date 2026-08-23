@@ -35,14 +35,21 @@ Per the authoritative model:
 | Anlassart | `EventType` (`PlanningRequest.eventType`, `Recipe.supportedEventTypes`) |
 | Persönliche Präferenz | `Preference` (`PlanningRequest.selectedPreferences`, `Recipe.preferences`) |
 
-<!-- TODO (spec.md line 52): the exact predefined Anlassart (EventType) values are not yet defined anywhere in the repository. Needs @razec3 product decision before EventType seed data can be written. -->
+**Approved (@razec3, 2026-08-23, issue #12):** the predefined Anlassart (EventType) values are
+Business-Apéro (`BUSINESS_APERO`), Vereinsanlass (`VEREINSANLASS`), and Brunch (`BRUNCH`). See
+`spec.md` §4.
 
-<!-- TODO: spec.md §4 lists four persönliche Präferenzen (Vegetarisch, Schweizer Produkt, Nachhaltige Packung, Saisonal). Their PreferenceCategory mapping is not defined anywhere. Proposed mapping, NOT approved — needs @EdiAnderegg/@razec3 confirmation:
-  - Vegetarisch      -> DIET
-  - Schweizer Produkt -> ORIGIN
-  - Nachhaltige Packung -> CERTIFICATION
-  - Saisonal          -> SEASONALITY
-  This also differs from the example preference list in CLAUDE.md ("Vegan, Vegetarian, Regional, Seasonal, Organic") — CLAUDE.md's list is explicitly non-exhaustive ("such as"), so this is not a contradiction, but the concrete MVP preference set should be recorded as approved data, not inferred by a coding agent. -->
+**Approved (@razec3, 2026-08-23, issue #12):** the persönliche Präferenz -> `PreferenceCategory`
+mapping is:
+
+- Vegetarisch (`VEGETARISCH`) -> `DIET`
+- Schweizer Produkt (`SCHWEIZER_PRODUKT`) -> `ORIGIN`
+- Nachhaltige Packung (`NACHHALTIGE_PACKUNG`) -> `CERTIFICATION`
+- Saisonal (`SAISONAL`) -> `SEASONALITY`
+
+This differs from the example preference list in CLAUDE.md ("Vegan, Vegetarian, Regional,
+Seasonal, Organic") — CLAUDE.md's list is explicitly non-exhaustive ("such as"), so this is not a
+contradiction; the concrete MVP preference set above is the approved data.
 
 ## 4. Feature-specific constraints
 

@@ -65,4 +65,4 @@ def test_valid_product_saves_successfully():
     product.full_clean()
     product.save()
 
-    assert Product.objects.count() == 1
+    assert Product.objects.filter(article_number="TG-1").count() == 1

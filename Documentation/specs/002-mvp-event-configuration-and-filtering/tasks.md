@@ -5,10 +5,13 @@ Ordered by dependency.
 
 ## Preparation (blocking — human decisions)
 
-- [ ] Get @razec3 decision on the Anlassart predefined values (`data-model.md` §3 TODO).
-- [ ] Get @razec3/@EdiAnderegg confirmation of the preference→`PreferenceCategory` mapping
-      (`data-model.md` §3 TODO).
-- [ ] Get @EdiAnderegg decision on mock-data strategy: in-memory vs. DB-seeded (`plan.md` §5).
+- [x] Get @razec3 decision on the Anlassart predefined values (`data-model.md` §3 TODO).
+      **Resolved:** Business-Apéro, Vereinsanlass, Brunch (issue #12, 2026-08-23).
+- [x] Get @razec3/@EdiAnderegg confirmation of the preference→`PreferenceCategory` mapping
+      (`data-model.md` §3 TODO). **Resolved:** mapping approved as proposed (issue #12,
+      2026-08-23).
+- [x] Get @EdiAnderegg decision on mock-data strategy: in-memory vs. DB-seeded (`plan.md` §5).
+      **Resolved:** DB-seeded (issue #12, 2026-08-23).
 - [x] Get @razec3 decision on whether the Working Skeleton's 70%-of-budget suggestion cap is
       removed as of this feature or still applies until `003` lands (`plan.md` §6). **Resolved:**
       `002` alone removes the cap (issue #8, 2026-08-23).
@@ -27,16 +30,17 @@ Ordered by dependency.
 
 ## Data layer
 
-- [ ] Implement the mock-data strategy chosen in Preparation:
-  - If in-memory: add event-type/preference tuples to each `Recipe` in `mock_data.py`.
-  - If DB-seeded: implement `DatabaseRecipeRepository`/`DatabaseProductRepository`
-    (`repositories.py`), a seed mechanism (data migration or `manage.py` command) for
-    `EventType`/`Preference`/`Recipe`/`Product`/`Ingredient`, and mapping functions between the
-    Django ORM models and the `domain.py` dataclasses.
-- [ ] Confirm the seeded/mock dataset includes recipes exercising every filter combination in
-      `spec.md` §7 (at least: recipes with different Anlassart, at least one `Vegetarisch` recipe,
-      at least one recipe matching both `Vegetarisch` and `Saisonal`, and a filter combination with
-      zero matches for Scenario 5).
+- [x] Seed mechanism for the DB-seeded strategy: data migration
+      `migrations/0002_seed_reference_and_recipe_data.py` seeds the 3 `EventType`, 4
+      `Preference`, and 3 recipe (with products/ingredients) rows. Covered by
+      `tests/integration/test_seed_data.py`.
+- [ ] Implement `DatabaseRecipeRepository`/`DatabaseProductRepository` (`repositories.py`) and the
+      mapping functions between the Django ORM models and the `domain.py` dataclasses.
+- [x] Confirm the seeded dataset includes recipes exercising every filter combination in
+      `spec.md` §7: different Anlassart (`Business-Apéro` vs. `Vereinsanlass` vs. `Brunch`, the
+      last with zero recipes — covers Scenario 5's "no matching recipe" case), at least one
+      `Vegetarisch` recipe (`Mediterraner Pasta-Abend`), and a recipe matching both `Vegetarisch`
+      and `Saisonal` (`Mediterraner Pasta-Abend`).
 
 ## Application layer
 

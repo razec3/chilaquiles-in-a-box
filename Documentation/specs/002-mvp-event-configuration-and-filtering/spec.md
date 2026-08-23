@@ -51,7 +51,11 @@ This feature supersedes the Working Skeleton behavior that limits displayed reci
 - The default value represents no specified Anlassart.
 - When no Anlassart is specified, Anlassart does not restrict recipe eligibility.
 
-<!-- TODO: Define the exact predefined Anlassart values. -->
+The predefined Anlassart values are (decision recorded 2026-08-23, issue #12):
+
+- Business-Apéro
+- Vereinsanlass
+- Brunch
 
 ### Persönliche Präferenzen
 

@@ -51,38 +51,29 @@ Keep this pure and Django-free, consistent with `CLAUDE.md`'s "Object-oriented d
   (`spec.md` §4: "the default value represents no specified Anlassart"); present preferences as a
   bounded multi-select (0–4). Enforce the 4-preference cap in the form (`forms.py`), not just the UI.
 
-## 5. Mock-data strategy — **open decision, not silently resolved**
+## 5. Mock-data strategy — **resolved: Option 2, DB-seeded**
 
 The Working Skeleton stores recipes as in-memory dataclasses in `mock_data.py`
 (`MockRecipeRepository`/`MockProductRepository`). Separately, `models.py` / `admin.py` /
 `migrations/0001_initial.py` already define and register Django ORM tables for `Recipe`, `Product`,
-`Ingredient`, `EventType`, and `Preference` — built but **currently unused** by any view (per
-`models.py`'s own docstring). CLAUDE.md's MVP scope lists "mock **or seeded** Transgourmet
-products," and the ERM documents these as persisted tables, which suggests the ORM path was
-intended to be wired in around the point event-type/preference filtering became necessary — i.e., now.
+`Ingredient`, `EventType`, and `Preference` — previously unused by any view (per `models.py`'s own
+docstring). CLAUDE.md's MVP scope lists "mock **or seeded** Transgourmet products," and the ERM
+documents these as persisted tables.
 
-Two options, **neither silently chosen here**:
+**Resolved (@razec3, 2026-08-23, issue #12): DB-seeded data**, reading through the existing Django
+ORM models rather than continuing the in-memory `mock_data.py` approach. Reference data (the 3
+approved `EventType` rows, the 4 approved `Preference` rows) and the 3 Working-Skeleton recipes
+(mirrored with their products/ingredients) are seeded by a data migration:
+[`migrations/0002_seed_reference_and_recipe_data.py`](../../../../Code/event_in_a_box/migrations/0002_seed_reference_and_recipe_data.py).
+See that migration's module docstring for the recipe→EventType/Preference classification rationale
+(e.g. `Mediterraner Pasta-Abend` has no meat/fish ingredient, hence `Vegetarisch`; `Brunch`
+intentionally has no recipe yet, covering `spec.md` §7 Scenario 5's "no matching recipe" case).
 
-1. **Continue in-memory mock data**: add `event_type`/`preference` fields to the `domain.py`
-   dataclasses and hand-write associations for each of the 3 WS mock recipes in `mock_data.py`.
-   Simplest, smallest diff, keeps `models.py` dormant.
-2. **Switch to DB-seeded data**: implement `DatabaseRecipeRepository`/`DatabaseProductRepository`
-   (per the "Collaborating interfaces" section of the domain-model spec) reading through the
-   existing Django ORM models, with `Recipe`/`Product`/`EventType`/`Preference`/`Ingredient` rows
-   loaded via a data migration or a `manage.py` seed command. Uses the persistence layer that
-   already exists for exactly this purpose; aligns with "seeded Transgourmet products" and with the
-   integration-test guidance in `CLAUDE.md` ("recipe and product repositories" as an integration-test
-   area).
-
-<!-- TODO/DECISION (@EdiAnderegg): choose option 1 or 2 before implementing this feature. Both are
-approved technology (Django ORM + PostgreSQL already in the stack); this is a mock-data-strategy
-choice, not a new-technology introduction. Recommendation: option 2, since the ORM models, admin,
-and migration already exist seemingly for this purpose and leaving them permanently dormant
-contradicts their presence in the codebase — but this is a judgment call for the architecture
-owner, not decided here. -->
-
-Either way, `IRecipeRepository`/`IProductRepository` stay the seam (`repositories.py`); views and
-`domain.py` do not change based on which option is chosen.
+Still pending (this feature's own "Data layer" tasks, not part of the mock-data-strategy decision):
+`DatabaseRecipeRepository`/`DatabaseProductRepository` implementations in `repositories.py`, and
+the mapping functions between the Django ORM models and the `domain.py` dataclasses.
+`IRecipeRepository`/`IProductRepository` stay the seam; views and `domain.py` do not change based
+on this decision.
 
 ## 6. Interfaces/contracts required
 
