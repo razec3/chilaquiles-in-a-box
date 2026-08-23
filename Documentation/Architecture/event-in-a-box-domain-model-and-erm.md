@@ -160,21 +160,22 @@ class AperoPackageCalculator {
     +AperoPackage calculate(recipes, request)
 }
 
+
+Recipe "0..*" --> "1..*" EventType
+Recipe "0..*" --> "0..*" Preference
+Preference --> "1" PreferenceCategory
 Recipe "1" *-- "1..*" Ingredient
 Ingredient --> "1" Product
 Product --> "1" MeasurementUnit : measured in
 Product --> "1" PackageType : sold in
-Recipe "0..*" --> "1..*" EventType
-Recipe "0..*" --> "0..*" Preference
-Preference --> "1" PreferenceCategory
 AperoPackageCalculator ..> PlanningRequest
 AperoPackageCalculator ..> Recipe
 AperoPackageCalculator ..> AperoPackage
 AperoPackage o-- "1..*" Recipe : calculated from
 AperoPackage *-- "1..*" ProductRequirement : contains
 ProductRequirement --> "1" Product
-AperoPackage --> "1" BudgetStatus
 AperoPackage ..> ProcurementOrderDraft : creates for editing
+AperoPackage --> "1" BudgetStatus
 ProductRequirement ..> ProcurementOrderLine : projected as
 ProcurementOrderDraft *-- "0..*" ProcurementOrderLine : editable lines
 ProcurementOrderLine --> "1" MeasurementUnit : measured in
