@@ -5,9 +5,7 @@
 
 {% block content %}
   <h1 class="page-title">Menüvorschläge für {{ guest_count }} Gäste</h1>
-  <p class="page-subtitle">
-    Budget: CHF {{ budget|floatformat:2 }} · Kostenlimit: CHF {{ purchase_limit|floatformat:2 }}
-  </p>
+  <p class="page-subtitle">Budget: CHF {{ budget|floatformat:2 }}</p>
 
   {% if suggestions %}
     {% for package in suggestions %}
@@ -34,10 +32,10 @@
     {% endfor %}
   {% else %}
     <div class="info-box empty-state">
-      Für diese Eingaben konnte kein passendes Menü gefunden werden. Bitte passen Sie Budget oder
-      Gästeanzahl an.
+      Für diese Anlassart und Präferenzen konnte kein passendes Rezept gefunden werden. Bitte
+      passen Sie die Event-Konfiguration an.
     </div>
   {% endif %}
 
-  <a class="btn btn-secondary" href="{% url 'event_in_a_box:event_input' %}">Zurück</a>
+  <a class="btn btn-secondary" href="{% url 'event_in_a_box:event_input' %}">Zurück zur Event-Konfiguration</a>
 {% endblock %}

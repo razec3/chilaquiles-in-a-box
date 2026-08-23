@@ -6,10 +6,10 @@ from django.shortcuts import redirect, render
 from .domain import AperoPackageCalculator
 from .exporters import JsonProcurementOrderExporter
 from .forms import EventInputForm
-from .repositories import MockRecipeRepository
+from .repositories import DatabaseRecipeRepository
 from .services import PlanningSession, find_recipe_suggestions, purchase_limit
 
-_recipe_repository = MockRecipeRepository()
+_recipe_repository = DatabaseRecipeRepository()
 _calculator = AperoPackageCalculator()
 
 
@@ -22,9 +22,13 @@ def event_input(request):
         form = EventInputForm(request.POST)
         if form.is_valid():
             planning_session = PlanningSession(request)
+            event_type = form.cleaned_data["event_type"]
+            preferences = form.cleaned_data["preferences"]
             planning_session.start(
                 guest_count=form.cleaned_data["guest_count"],
                 maximum_budget=form.cleaned_data["budget"],
+                event_type_code=event_type.code if event_type else None,
+                preference_codes=tuple(preference.code for preference in preferences),
             )
             return redirect("event_in_a_box:suggestions")
     else:
@@ -45,7 +49,6 @@ def suggestions(request):
     context = {
         "guest_count": planning_request.guest_count,
         "budget": planning_request.maximum_budget,
-        "purchase_limit": purchase_limit(planning_request.maximum_budget),
         "suggestions": matches,
     }
     return render(request, "event_in_a_box/suggestions.html", context)

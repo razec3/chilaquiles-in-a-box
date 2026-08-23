@@ -45,6 +45,37 @@ Not tied to one numbered scenario, but exercised throughout:
 | `AperoPackageCalculator.calculate` requires at least one recipe | `tests/unit/test_domain.py::test_calculate_requires_at_least_one_recipe` |
 | A page without the required session state redirects to the event input | `test_working_skeleton_views.py::test_suggestions_without_planning_request_redirects_to_event_input` |
 
+**Superseded by `specs/002-mvp-event-configuration-and-filtering` (issue #8):** the Working
+Skeleton's own Scenario 8 ("no recipe satisfies the budget constraint" — a 70%-of-budget suggestion
+cap) no longer describes real system behavior and was removed from
+`tests/acceptance/features/working_skeleton.feature`, `tests/acceptance/step_definitions/test_working_skeleton.py`,
+`tests/integration/test_working_skeleton_views.py`, and `tests/unit/test_services.py`. Its
+replacement — a "no matching recipe" result driven by Anlassart/preference classification instead
+of budget — is covered by `002`'s own Scenario 5 below.
+
+## Feature: `specs/002-mvp-event-configuration-and-filtering`
+
+Requirements are `spec.md`'s numbered acceptance scenarios (§7).
+
+| `spec.md` scenario | Unit | Integration | Acceptance |
+|---|---|---|---|
+| 1 — Filter by Anlassart | `tests/unit/test_recipe_classification.py::test_recipe_supporting_the_selected_event_type_is_eligible`, `::test_recipe_not_supporting_the_selected_event_type_is_excluded`; `tests/unit/test_services.py::test_only_recipes_matching_the_selected_event_type_are_suggested` | `tests/integration/test_event_configuration_and_filtering_views.py::test_suggestions_filters_by_event_type` | `event_configuration_and_filtering.feature` → `Scenario: Filter by Anlassart` |
+| 2 — Filter by one preference | `tests/unit/test_recipe_classification.py::test_recipe_carrying_the_single_selected_preference_is_eligible`, `::test_recipe_missing_the_single_selected_preference_is_excluded`; `tests/unit/test_services.py::test_recipe_missing_a_selected_preference_is_excluded` | — | `event_configuration_and_filtering.feature` → `Scenario: Filter by one preference` |
+| 3 — Combine Anlassart and multiple preferences | `tests/unit/test_recipe_classification.py::test_recipe_matching_event_type_and_every_selected_preference_is_eligible`, `::test_recipe_missing_one_of_several_selected_preferences_is_excluded` | `tests/integration/test_event_configuration_and_filtering_views.py::test_suggestions_filters_by_preferences_with_and_semantics` | `event_configuration_and_filtering.feature` → `Scenario: Combine Anlassart and multiple preferences` |
+| 4 — No optional filters | `tests/unit/test_recipe_classification.py::test_no_filters_active_the_recipe_is_eligible`; `tests/unit/test_services.py::test_all_recipes_are_suggested_when_no_filters_are_active` | `tests/integration/test_event_configuration_and_filtering_views.py::test_suggestions_with_no_optional_filters_returns_all_recipes` | `event_configuration_and_filtering.feature` → `Scenario: No optional filters` |
+| 5 — No matching recipe | `tests/unit/test_services.py::test_no_recipe_matches_the_active_filters` | `tests/integration/test_event_configuration_and_filtering_views.py::test_suggestions_shows_distinct_no_match_message_when_event_type_has_no_recipes` | `event_configuration_and_filtering.feature` → `Scenario: No matching recipe` |
+| 6 — Invalid budget | — | (shared `EventInputForm` validation; see `001`'s Scenario 6 tests) | `event_configuration_and_filtering.feature` → `Scenario: Invalid budget` |
+| 7 — Invalid number of guests | — | (shared `EventInputForm` validation; see `001`'s Scenario 7 tests) | `event_configuration_and_filtering.feature` → `Scenario: Invalid number of guests` |
+| 8 — Change event configuration | — | `tests/integration/test_event_configuration_and_filtering_views.py::test_changing_event_configuration_resets_previously_confirmed_recipe` | `event_configuration_and_filtering.feature` → `Scenario: Change event configuration` |
+
+Not tied to one numbered scenario, but exercised throughout:
+
+| Requirement | Test |
+|---|---|
+| `EventInputForm` enforces the 0-4 preference cap (`spec.md` §4) | `tests/integration/test_event_configuration_and_filtering_views.py::test_event_input_rejects_more_than_four_preferences` |
+| The event-input page offers the seeded Anlassart/preference choices | `tests/integration/test_event_configuration_and_filtering_views.py::test_event_input_form_offers_the_seeded_event_type_and_preference_choices` |
+| Seed data (`EventType`, `Preference`, recipe associations) | `tests/integration/test_seed_data.py` (all) |
+
 ## `CLAUDE.md` core business rules — current coverage
 
 Only rules the Working Skeleton actually exercises are covered by tests today; the rest are
@@ -59,8 +90,8 @@ pending the full MVP feature spec.
 | 4. MVP currency is CHF | Implemented (display only; no multi-currency logic exists to test) | — |
 | 5. A recipe must contain at least one ingredient | Holds for the three mock recipes; not enforced by a validator (no recipe authoring/import exists yet) | — |
 | 6-11. Product article number, package quantity/price, `measuredIn`/`soldIn`, unit conversion out of scope | Implemented for the mock dataset | `tests/unit/test_exporters.py::test_export_contains_expected_values` |
-| 12-13. Preference/event-type filtering | **Not implemented** — Working Skeleton has no preferences or event types (`spec.md` §3) | — |
-| 14. Single-recipe suggestions must not exceed the request budget | **Deviated in Working Skeleton only**: the WS used a stricter 70%-of-budget cap instead (`specs/001-working-skeleton/plan.md` §6). Resolved for the MVP: `specs/002-mvp-event-configuration-and-filtering` removes the cap outright (issue #8) | `tests/unit/test_services.py` (WS-only; superseded once `002` is implemented) |
+| 12-13. Preference/event-type filtering | Implemented by `specs/002-mvp-event-configuration-and-filtering` (`Recipe.matches_classification`) | `tests/unit/test_recipe_classification.py`, `tests/unit/test_services.py`, `event_configuration_and_filtering.feature` |
+| 14. Single-recipe suggestions must not exceed the request budget | **Superseded for the MVP**: `specs/002-mvp-event-configuration-and-filtering` removes budget-based suggestion eligibility outright (issue #8) — `spec.md` §6: "Budget does not filter recipe eligibility." The Working Skeleton's own 70%-of-budget cap no longer applies | `tests/unit/test_services.py::test_all_recipes_are_suggested_when_no_filters_are_active` |
 | 15. One or more recipes may be selected | **Narrowed**: Working Skeleton allows selecting exactly one (`spec.md` §7 Scenario 2) | `test_working_skeleton_views.py::test_happy_path_end_to_end` |
 | 16-20. Aggregation, package rounding, line cost, total cost, cost per guest | Implemented | `tests/unit/test_domain.py` |
 | 21-23. `BudgetStatus`, over-budget confirmation | **Not implemented** — deferred to the full MVP feature (`plan.md` §6) | — |

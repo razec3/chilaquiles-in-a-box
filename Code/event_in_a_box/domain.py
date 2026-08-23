@@ -53,18 +53,60 @@ class Ingredient:
     quantity_per_guest: Decimal
 
 
+class PreferenceCategory(Enum):
+    DIET = "DIET"
+    ORIGIN = "ORIGIN"
+    SEASONALITY = "SEASONALITY"
+    CERTIFICATION = "CERTIFICATION"
+
+
+@dataclass(frozen=True)
+class EventType:
+    """Anlassart (spec.md §4)."""
+
+    code: str
+    display_name: str
+
+
+@dataclass(frozen=True)
+class Preference:
+    """Persönliche Präferenz (spec.md §4)."""
+
+    code: str
+    display_name: str
+    category: PreferenceCategory
+
+
 @dataclass(frozen=True)
 class Recipe:
     id: str
     name: str
     description: str
     ingredients: tuple[Ingredient, ...]
+    supported_event_types: tuple[EventType, ...] = ()
+    preferences: tuple[Preference, ...] = ()
+
+    def matches_classification(self, request: "PlanningRequest") -> bool:
+        """spec.md §6-7 (002): Anlassart and every selected preference are
+
+        hard (AND) filters; unset filters do not restrict eligibility.
+        """
+        event_type_matches = request.event_type is None or any(
+            event_type.code == request.event_type.code for event_type in self.supported_event_types
+        )
+        preferences_match = all(
+            any(preference.code == candidate.code for candidate in self.preferences)
+            for preference in request.selected_preferences
+        )
+        return event_type_matches and preferences_match
 
 
 @dataclass(frozen=True)
 class PlanningRequest:
     guest_count: int
     maximum_budget: Decimal
+    event_type: EventType | None = None
+    selected_preferences: tuple[Preference, ...] = ()
 
 
 @dataclass(frozen=True)

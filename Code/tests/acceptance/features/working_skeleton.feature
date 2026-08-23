@@ -35,7 +35,9 @@ Feature: Working Skeleton end-to-end flow
     When the user requests recipe proposals with budget "2000.00" and 0 guests
     Then the system blocks the request and shows a validation message
 
-  Scenario: No recipe satisfies the budget constraint
-    Given the budget is "100.00" and the number of guests is 50
-    When the user requests recipe proposals
-    Then the system informs the user that no suitable recipe can be proposed
+  # The former "No recipe satisfies the budget constraint" scenario (a 70%-of-
+  # budget suggestion cap) is removed: specs/002-mvp-event-configuration-and-filtering
+  # (issue #8) supersedes that behavior outright. Its "no matching recipe"
+  # replacement, driven by Anlassart/preference classification instead of
+  # budget, is covered by event_configuration_and_filtering.feature's
+  # "No matching recipe" scenario.

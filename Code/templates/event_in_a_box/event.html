@@ -1,5 +1,4 @@
 {% extends "event_in_a_box/base.html" %}
-{% load static %}
 
 {% block title %}Event planen{% endblock %}
 {% block breadcrumb_page %}Event planen{% endblock %}
@@ -47,16 +46,39 @@
 
       <hr class="divider">
 
-      <div class="info-box">
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 8v.01M12 11v5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-        <span id="purchase-limit-hint">Einkaufskosten max. 70% des Budgets</span>
+      <div class="field">
+        <label for="id_event_type">Anlassart</label>
+        <select name="event_type" id="id_event_type">
+          {% for value, label in form.fields.event_type.choices %}
+            <option value="{{ value }}" {% if value == form.event_type.value %}selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+        </select>
+        {% for error in form.event_type.errors %}
+          <span class="field-error">{{ error }}</span>
+        {% endfor %}
+      </div>
+
+      <div class="field">
+        <span>Persönliche Präferenzen</span>
+        <div class="checkbox-group">
+          {% for value, label in form.fields.preferences.choices %}
+            <label class="checkbox-option">
+              <input
+                type="checkbox"
+                name="preferences"
+                value="{{ value }}"
+                {% if value in form.preferences.value|default:"" %}checked{% endif %}
+              >
+              {{ label }}
+            </label>
+          {% endfor %}
+        </div>
+        {% for error in form.preferences.errors %}
+          <span class="field-error">{{ error }}</span>
+        {% endfor %}
       </div>
     </div>
 
     <button type="submit" class="btn btn-primary">Vorschläge anzeigen</button>
   </form>
-{% endblock %}
-
-{% block scripts %}
-  <script src="{% static 'js/event-form.js' %}"></script>
 {% endblock %}

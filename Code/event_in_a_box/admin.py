@@ -28,8 +28,9 @@ class IngredientInline(admin.TabularInline):
 
 @admin.register(Recipe)
 class RecipeAdmin(admin.ModelAdmin):
-    list_display = ("name", "description")
-    search_fields = ("name",)
+    list_display = ("name", "slug", "description")
+    search_fields = ("name", "slug")
+    prepopulated_fields = {"slug": ("name",)}
     filter_horizontal = ("supported_event_types", "preferences")
     inlines = [IngredientInline]
 

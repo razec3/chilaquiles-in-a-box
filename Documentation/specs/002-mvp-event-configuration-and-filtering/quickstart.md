@@ -17,8 +17,9 @@ docker compose build
 docker compose run --rm web python manage.py migrate
 ```
 
-If DB-seeded mock data was chosen: also run the seed command/data migration once it exists (name
-TBD — `<!-- TODO: fill in once the seed mechanism from plan.md §5 is implemented -->`).
+DB-seeded mock data was chosen (`plan.md` §5): `migrate` above already applies the seed — it is a
+plain data migration (`migrations/0002_seed_reference_and_recipe_data.py`), not a separate
+management command. No extra step is required.
 
 ## Start the application
 

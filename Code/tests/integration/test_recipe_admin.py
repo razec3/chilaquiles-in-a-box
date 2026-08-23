@@ -70,7 +70,7 @@ def test_deleting_a_recipe_deletes_its_ingredients():
 
     recipe.delete()
 
-    assert Ingredient.objects.count() == 0
+    assert Ingredient.objects.filter(product=product).count() == 0
 
 
 def test_a_product_referenced_by_an_ingredient_cannot_be_deleted():
