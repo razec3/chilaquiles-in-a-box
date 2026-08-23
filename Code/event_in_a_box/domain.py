@@ -92,8 +92,7 @@ class Recipe:
         hard (AND) filters; unset filters do not restrict eligibility.
         """
         event_type_matches = request.event_type is None or any(
-            event_type.code == request.event_type.code
-            for event_type in self.supported_event_types
+            event_type.code == request.event_type.code for event_type in self.supported_event_types
         )
         preferences_match = all(
             any(preference.code == candidate.code for candidate in self.preferences)

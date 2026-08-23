@@ -56,8 +56,8 @@ def test_vereinsanlass_covers_every_seeded_recipe():
 
 
 def test_exactly_one_seeded_recipe_is_vegetarisch_and_saisonal():
-    matching = Recipe.objects.filter(
-        preferences__code="VEGETARISCH"
-    ).filter(preferences__code="SAISONAL")
+    matching = Recipe.objects.filter(preferences__code="VEGETARISCH").filter(
+        preferences__code="SAISONAL"
+    )
 
     assert list(matching.values_list("name", flat=True)) == ["Mediterraner Pasta-Abend"]
