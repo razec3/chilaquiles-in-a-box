@@ -68,3 +68,13 @@ migration is required for this feature — the tables already exist (`0001_initi
 missing is **seed data**: no `EventType`/`Preference` rows exist yet, and the Working Skeleton's
 `mock_data.py` recipes carry no event-type/preference associations. See `plan.md` §5 for the
 mock/seed-data decision this raises.
+
+**Addendum (implementation, 2026-08-23):** implementing `DatabaseRecipeRepository` (the "Data
+layer" task deferred by `plan.md` §5) surfaced one schema addition this data-model did not
+anticipate: `Recipe` needed a stable, URL-safe identifier for `domain.Recipe.id`. The ERM's
+`RECIPE.id` (`Documentation/Architecture/event-in-a-box-domain-model-and-erm.md` §8) is a
+persistence-only primary key, not meant to leak into URLs — and the Working Skeleton's own tests
+and templates already depend on the human-readable ids `mock_data.py` used (e.g.
+`zuercher-geschnetzeltes`). `migrations/0003_recipe_slug.py` adds `Recipe.slug` (unique
+`SlugField`) and backfills the three seeded recipes with their existing Working Skeleton ids, so no
+URL or test behavior changes. See that migration's docstring for the full rationale.

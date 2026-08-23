@@ -380,6 +380,7 @@ The ERM contains only persisted master data. Planning requests, calculated Apero
 erDiagram
     RECIPE {
         uuid id PK
+        string slug UK
         string name
         string description
     }
@@ -443,6 +444,8 @@ erDiagram
 | `RECIPE_PREFERENCE` | Preferences assigned to recipes |
 
 The composite primary key `(recipe_id, product_id)` in `INGREDIENT` ensures that one product appears at most once in a recipe.
+
+`RECIPE.slug` is a URL-safe, human-readable identifier distinct from the persistence-key `id`; it is what `domain.Recipe.id` and recipe-facing URLs use (added by `specs/002-mvp-event-configuration-and-filtering`, see that feature's `data-model.md` addendum).
 
 `PRODUCT.measured_in_code` is constrained to the supported `MeasurementUnit` values. `PRODUCT.sold_in_code` is constrained to the supported `PackageType` values. They remain columns rather than separate lookup tables for the MVP.
 

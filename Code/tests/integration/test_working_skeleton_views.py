@@ -1,6 +1,13 @@
 """Integration tests for the Working Skeleton view/session flow, exercising
 spec.md's acceptance scenarios end-to-end through the real Django test
-client and PostgreSQL-backed session store."""
+client and PostgreSQL-backed session store.
+
+The former "no recipe satisfies the budget constraint" test (WS Scenario 8)
+was removed here: specs/002-mvp-event-configuration-and-filtering (issue #8)
+supersedes the 70%-of-budget suggestion cap outright, so that behavior no
+longer exists. Equivalent "no matching recipe" coverage now lives in
+tests/integration/test_event_configuration_and_filtering_views.py, driven by
+Anlassart/preference classification instead of budget."""
 
 import json
 
@@ -29,8 +36,6 @@ def test_happy_path_end_to_end(client):
     assert response.status_code == 200
     suggestions = response.context["suggestions"]
     assert len(suggestions) >= 1
-    for package in suggestions:
-        assert package.total_purchase_cost <= response.context["purchase_limit"]
 
     # Scenario 2: select and view a recipe with scaled ingredients.
     response = client.post(reverse("event_in_a_box:select_recipe", kwargs={"recipe_id": RECIPE_ID}))
@@ -103,17 +108,6 @@ def test_reject_invalid_guest_count_shows_validation_message(client):
 
     assert response.status_code == 200
     assert response.context["form"].errors["guest_count"]
-
-
-def test_no_recipe_satisfies_the_budget_constraint(client):
-    # Scenario 8: 70% of CHF 100 = CHF 70, below every mock recipe's cost at 50 guests.
-    _submit_event_input(client, guest_count=50, budget="100.00")
-
-    response = client.get(reverse("event_in_a_box:suggestions"))
-
-    assert response.status_code == 200
-    assert response.context["suggestions"] == []
-    assert "kein passendes Menü" in response.content.decode()
 
 
 def test_suggestions_without_planning_request_redirects_to_event_input(client):

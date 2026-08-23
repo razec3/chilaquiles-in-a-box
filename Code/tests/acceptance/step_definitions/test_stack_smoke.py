@@ -1,6 +1,8 @@
 """Infrastructure-level smoke scenario: the start page can be requested.
 
-This does not describe or implement Event-in-a-Box business behaviour.
+This does not describe or implement Event-in-a-Box business behaviour. Needs
+`django_db` as of specs/002-mvp-event-configuration-and-filtering: the start
+page's Anlassart/preference fields now query the database when rendered.
 """
 
 import pytest
@@ -8,7 +10,7 @@ from pytest_bdd import given, scenarios, then, when
 
 scenarios("../features/stack_smoke.feature")
 
-pytestmark = pytest.mark.acceptance
+pytestmark = [pytest.mark.acceptance, pytest.mark.django_db]
 
 
 @given("the Event in a Box application is running", target_fixture="app_client")

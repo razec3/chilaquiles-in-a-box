@@ -157,10 +157,3 @@ def assert_json_download_without_price(flow):
 def assert_blocked_with_validation_message(flow):
     assert flow.response.status_code == 200
     assert flow.response.context["form"].errors
-
-
-@then("the system informs the user that no suitable recipe can be proposed")
-def assert_no_suitable_recipe_message(flow):
-    assert flow.response.status_code == 200
-    assert flow.response.context["suggestions"] == []
-    assert "kein passendes Menü" in flow.response.content.decode()

@@ -217,6 +217,40 @@ hr.divider {
   outline-offset: -1px;
 }
 
+.field select {
+  border: 1px solid var(--tg-grey-border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 16px;
+  font-family: inherit;
+  background: #ffffff;
+}
+
+.field select:focus {
+  outline: 2px solid var(--tg-red);
+  outline-offset: -1px;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.checkbox-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.checkbox-option input {
+  width: 18px;
+  height: 18px;
+  flex: none;
+}
+
 .field-error {
   color: var(--tg-red-dark);
   font-size: 13px;

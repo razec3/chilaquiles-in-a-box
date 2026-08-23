@@ -102,6 +102,7 @@ class Recipe(models.Model):
     cannot be created in a single row)."""
 
     name = models.CharField(max_length=200)
+    slug = models.SlugField(max_length=220, unique=True)
     description = models.TextField(blank=True)
     supported_event_types = models.ManyToManyField(EventType, blank=True, related_name="recipes")
     preferences = models.ManyToManyField(Preference, blank=True, related_name="recipes")
