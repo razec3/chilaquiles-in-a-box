@@ -23,8 +23,8 @@ The system calculates matching recipe suggestions from stored recipes and curren
 
 ## Team authority
 
-- Rodrigo owns product management, scope, prioritisation, and final product decisions.
-- Eduard owns software architecture and implementation decisions within the approved product scope.
+- @razec3 owns product management, scope, prioritisation, and final product decisions.
+- @EdiAnderegg owns software architecture and implementation decisions within the approved product scope.
 - Both may discuss product and technical alternatives.
 - If a requirement is ambiguous or contradicts another approved artefact, stop and request a decision. Do not silently choose or expand the scope.
 
@@ -541,8 +541,8 @@ A feature is ready for implementation only when:
 - Figma frames are linked for UI work
 - OOD and ERM impact is identified
 - security and data implications are identified
-- Rodrigo has approved the product scope
-- Eduard has approved the technical direction in the plan
+- @razec3 has approved the product scope
+- @EdiAnderegg has approved the technical direction in the plan
 
 ## Definition of Done
 
