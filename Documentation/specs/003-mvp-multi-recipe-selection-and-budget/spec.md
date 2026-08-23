@@ -10,7 +10,7 @@ The user must be able to understand the standalone cost of each recipe and the c
 
 ## 2. Relationship to Working Skeleton
 
-This feature supersedes the Working Skeleton behavior that limits displayed recipe proposals to a maximum cost of 70% of the entered budget.
+This feature continues the Working Skeleton behavior change already made by `002`, which removes the restriction that limited displayed recipe proposals to a maximum cost of 70% of the entered budget (decision recorded in issue #8). No cap remains for this feature to remove.
 
 For the MVP:
 

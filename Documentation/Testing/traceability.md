@@ -60,7 +60,7 @@ pending the full MVP feature spec.
 | 5. A recipe must contain at least one ingredient | Holds for the three mock recipes; not enforced by a validator (no recipe authoring/import exists yet) | — |
 | 6-11. Product article number, package quantity/price, `measuredIn`/`soldIn`, unit conversion out of scope | Implemented for the mock dataset | `tests/unit/test_exporters.py::test_export_contains_expected_values` |
 | 12-13. Preference/event-type filtering | **Not implemented** — Working Skeleton has no preferences or event types (`spec.md` §3) | — |
-| 14. Single-recipe suggestions must not exceed the request budget | **Deviated**: Working Skeleton uses a stricter 70%-of-budget cap instead. See `specs/001-working-skeleton/plan.md` §6 for the flagged discrepancy | `tests/unit/test_services.py` |
+| 14. Single-recipe suggestions must not exceed the request budget | **Deviated in Working Skeleton only**: the WS used a stricter 70%-of-budget cap instead (`specs/001-working-skeleton/plan.md` §6). Resolved for the MVP: `specs/002-mvp-event-configuration-and-filtering` removes the cap outright (issue #8) | `tests/unit/test_services.py` (WS-only; superseded once `002` is implemented) |
 | 15. One or more recipes may be selected | **Narrowed**: Working Skeleton allows selecting exactly one (`spec.md` §7 Scenario 2) | `test_working_skeleton_views.py::test_happy_path_end_to_end` |
 | 16-20. Aggregation, package rounding, line cost, total cost, cost per guest | Implemented | `tests/unit/test_domain.py` |
 | 21-23. `BudgetStatus`, over-budget confirmation | **Not implemented** — deferred to the full MVP feature (`plan.md` §6) | — |

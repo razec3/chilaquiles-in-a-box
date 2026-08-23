@@ -26,8 +26,8 @@ Ordered by dependency; assumes `002`'s tasks are complete.
 - [ ] Unit tests: boundary values at exactly 70% and exactly 100%.
 - [ ] Replace `PlanningSession.selected_recipe_id` with `selected_recipe_ids` (list/set); add
       `toggle_recipe(id)`.
-- [ ] Update `services.find_recipe_suggestions` (or successor) so it no longer applies the 70%
-      cap for selection purposes if the `002`-blocking decision confirmed its removal.
+- [ ] Confirm `services.find_recipe_suggestions` (or successor) applies no 70%-of-budget cap —
+      already removed by `002` (issue #8); no further change needed here for this purpose.
 
 ## Views/templates
 

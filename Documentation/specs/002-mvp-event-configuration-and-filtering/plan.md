@@ -90,16 +90,12 @@ No new HTTP/JSON contract. Page routes are unchanged (`POST /`, `GET /suggestion
 `contracts/` directory is created for this feature per `CLAUDE.md` ("create contracts only where an
 actual interface boundary exists").
 
-**Flagged discrepancy, not resolved here:** the Working Skeleton's `find_recipe_suggestions`
-additionally caps suggestions at 70% of budget (`001-working-skeleton/plan.md` §6, already flagged
-there as a discrepancy against CLAUDE.md business rule 14). `spec.md` §6 for this feature states
-"Budget does not filter recipe eligibility," which — read literally — removes that cap. However,
-`spec.md` §2 ("Relationship to Working Skeleton") does not explicitly identify this as superseding
-Working Skeleton behavior, as `CLAUDE.md`'s specification-precedence section requires. `003`'s
-spec *does* explicitly supersede the 70% cap. Implementing this feature therefore requires an
-explicit decision on whether the 70% cap is already gone as of `002`, or still applies until `003`
-lands. See the final report's "Critical inconsistencies" section — **do not implement filtering
-in a way that silently keeps or silently drops the cap; confirm with @razec3 first.**
+**Resolved (@razec3, 2026-08-23, issue #8):** `002` alone removes the Working Skeleton's
+`find_recipe_suggestions` 70%-of-budget suggestion cap (`001-working-skeleton/plan.md` §6). `spec.md`
+§2 now explicitly identifies this as superseding Working Skeleton behavior, per `CLAUDE.md`'s
+specification-precedence section. The cap does not apply from `002` onward; it does not linger
+until `003` lands. Implement `Recipe.matches_classification`/`find_recipe_suggestions` filtering
+with no budget-based eligibility check.
 
 ## 7. Testing approach
 

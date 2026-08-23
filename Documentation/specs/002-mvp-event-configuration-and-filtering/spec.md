@@ -18,6 +18,8 @@ This feature extends the Working Skeleton event input by adding:
 
 The existing Working Skeleton requirements for budget and number of guests remain applicable unless explicitly superseded by another MVP feature specification.
 
+This feature supersedes the Working Skeleton behavior that limits displayed recipe proposals to a maximum cost of 70% of the entered budget. As of this feature, budget does not filter recipe eligibility (§6); the 70%-of-budget suggestion cap no longer applies. (Decision recorded 2026-08-23, issue #8.)
+
 ---
 
 ## 3. User Flow

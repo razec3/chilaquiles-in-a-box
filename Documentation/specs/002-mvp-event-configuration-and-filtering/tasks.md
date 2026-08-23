@@ -9,8 +9,9 @@ Ordered by dependency.
 - [ ] Get @razec3/@EdiAnderegg confirmation of the preference→`PreferenceCategory` mapping
       (`data-model.md` §3 TODO).
 - [ ] Get @EdiAnderegg decision on mock-data strategy: in-memory vs. DB-seeded (`plan.md` §5).
-- [ ] Get @razec3 decision on whether the Working Skeleton's 70%-of-budget suggestion cap is
-      removed as of this feature or still applies until `003` lands (`plan.md` §6).
+- [x] Get @razec3 decision on whether the Working Skeleton's 70%-of-budget suggestion cap is
+      removed as of this feature or still applies until `003` lands (`plan.md` §6). **Resolved:**
+      `002` alone removes the cap (issue #8, 2026-08-23).
 
 ## Domain layer
 
@@ -45,7 +46,7 @@ Ordered by dependency.
       state, and to reset all downstream state when any event input changes (`spec.md` §7
       Scenario 8) — reuse/extend the existing `.start()`/`.clear()` methods.
 - [ ] Update `services.find_recipe_suggestions` (or its replacement) to filter via
-      `matches_classification`, resolving the §6 budget-cap question from `plan.md`.
+      `matches_classification` only, removing the 70%-of-budget suggestion cap (`plan.md` §6).
 
 ## Views/templates
 

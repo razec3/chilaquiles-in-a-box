@@ -49,7 +49,7 @@ Per the authoritative model:
 - Every selected preference is a mandatory (AND) filter (CLAUDE.md business rule 12; `spec.md` §6).
 - Anlassart, when specified, is a mandatory (hard) filter; when unspecified, it does not restrict eligibility (`spec.md` §6).
 - A recipe is eligible only if it satisfies **all** active filters simultaneously (Anlassart AND every selected preference).
-- Budget does **not** filter recipe eligibility in this feature (`spec.md` §6). See `plan.md` §6 for the open question this raises about the Working Skeleton's 70%-of-budget suggestion cap.
+- Budget does **not** filter recipe eligibility in this feature (`spec.md` §6). This feature removes the Working Skeleton's 70%-of-budget suggestion cap outright (`spec.md` §2, decision recorded in issue #8); see `plan.md` §6.
 - No ranking/recommendation logic — eligible recipes are returned unordered (or in a stable, arbitrary order).
 - Changing any event-configuration input after recipe selection has started resets all downstream state (`spec.md` §6, Scenario 8) — this is session/application state, not part of the persisted domain model.
 
