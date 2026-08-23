@@ -185,6 +185,16 @@ Documentation/specs/NNN-feature-name/
 
 `data-model.md`, `contracts/`, `research.md`, and `quickstart.md` are feature-local supporting documents created only when required.
 
+### Specification precedence
+
+The Working Skeleton specification defines temporary behavior used to validate the end-to-end architecture.
+
+Approved feature specifications may extend or supersede Working Skeleton behavior.
+
+When a feature specification explicitly supersedes a Working Skeleton requirement, the feature specification takes precedence for that functionality.
+
+Superseded behavior must be identified explicitly in the newer feature specification.
+
 ### Constitution
 
 Store permanent project principles in:
